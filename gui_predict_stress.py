@@ -7,7 +7,7 @@ from sklearn.model_selection import train_test_split
 import pandas as pd
 
 data = pd.read_csv('student_stress_factors.csv')
-Data_train, Data_test = train_test_split(data, test_size=0.1, random_state=42)
+Data_train, Data_test = train_test_split(data, test_size=0.2, random_state=42)
 
 scaler = StandardScaler()
 Data_train_scaled = scaler.fit_transform(Data_train)
@@ -20,7 +20,6 @@ kmeans_train.fit(Data_train)
 cluster_labels_test = kmeans_train.predict(Data_test)
 
 # Tạo hàm để dự đoán mức độ căng thẳng
-
 def predict_stress():
     new_data = pd.DataFrame({
         'Kindly Rate your Sleep Quality': float(sleep_quality_entry.get()),
@@ -28,7 +27,7 @@ def predict_stress():
         'How would you rate you academic performance?': float(academic_performance_entry.get()),
         'how would you rate your study load?': float(study_load_entry.get()),
         'How many times a week you practice extracurricular activities ?': float(extracurricular_activities_entry.get()),
-        'How would you rate your stress levels?': 0  # Thêm đặc trưng "How would you rate your stress levels?" với giá trị tạm thời
+        'How would you rate your stress levels?': 0
     }, index=[0])
 
     # Chuẩn hóa dữ liệu mới
@@ -51,8 +50,6 @@ def predict_stress():
 # Tạo giao diện
 root = tk.Tk()
 root.title('Stress Prediction')
-
-# Tạo các label và entry cho mỗi đặc trưng
 sleep_quality_label = ttk.Label(root, text='Sleep Quality:')
 sleep_quality_entry = ttk.Entry(root)
 
@@ -68,10 +65,10 @@ study_load_entry = ttk.Entry(root)
 extracurricular_activities_label = ttk.Label(root, text='Extracurricular Activities per week:')
 extracurricular_activities_entry = ttk.Entry(root)
 
-# Button để thực hiện dự đoán
+# Button thực hiện dự đoán
 predict_button = ttk.Button(root, text='Predict Stress', command=predict_stress)
 
-# Label để hiển thị kết quả
+# Label hiển thị kết quả
 result_label = ttk.Label(root, text='Predicted Stress Level:')
 silhouette_label = ttk.Label(root, text='Silhouette Score (Test):')
 davies_bouldin_label = ttk.Label(root, text='Davies-Bouldin Score (Test):')

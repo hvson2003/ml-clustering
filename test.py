@@ -3,7 +3,6 @@ from tkinter import ttk
 import pandas as pd
 import numpy as np
 
-# Đọc dữ liệu từ file CSV
 data = pd.read_csv('student_stress_factors.csv')
 
 # Chọn các đặc trưng để sử dụng cho phân cụm
@@ -48,12 +47,10 @@ def update_centroids(X, labels, K):
             centroids[i] /= counts[i]
     return centroids
 
-# Initialize KMeans model
 K = 5
 labels, centroids = kmeans(scaled_features, K)
 
-# Chia dữ liệu thành tập huấn luyện và tập kiểm thử (90% - 10%)
-def train_test_split(X, y, test_size=0.1, random_state=None):
+def train_test_split(X, y, test_size=0.2, random_state=None):
     if random_state is not None:
         np.random.seed(random_state)
     indices = np.arange(len(X))
